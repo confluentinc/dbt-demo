@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: high_value_orders
+    description: >
+      Continuously refreshed materialized table containing only orders whose
+      amount meets or exceeds a configured threshold (currently $300 USD).
+      The WHERE-clause threshold in high_value_orders.sql is the single
+      editable knob — change it and re-run with
+      `dbt run --full-refresh -s high_value_orders` to apply the new logic.
+      Flink owns the refresh pipeline via the FRESHNESS contract; dbt manages
+      the table lifecycle.
+
+    columns:
+      - name: order_id
+        data_type: BIGINT
+        description: Unique order identifier.
+        tests:
+          - not_null
+
+      - name: customer_id
+        data_type: BIGINT
+        description: Customer who placed the order.
+        tests:
+          - not_null
+
+      - name: product_id
+        data_type: BIGINT
+        description: Product the order is for.
+        tests:
+          - not_null
+
+      - name: product_name
+        data_type: STRING
+        description: Human-readable product name.
+        tests:
+          - not_null
+
+      - name: amount
+        data_type: DOUBLE
+        description: Order amount in USD. Always >= the configured threshold.
+        tests:
+          - not_null
+
+      - name: status
+        data_type: STRING
+        description: "Order status: placed, processing, shipped, or delivered."
+        tests:
+          - not_null
+
+      - name: event_time
+        data_type: TIMESTAMP(3)
+        description: Timestamp when the order was placed.
+        tests:
+          - not_null
