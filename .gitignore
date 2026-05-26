@@ -1,0 +1,29 @@
+# Credentials — never commit these
+.env
+.env.*
+!.env.example
+
+# dbt artifacts
+target/
+logs/
+dbt_packages/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+.python-version
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Claude Code — developer-local settings
+.claude/settings.local.json

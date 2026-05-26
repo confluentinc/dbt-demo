@@ -1,0 +1,17 @@
+# All values are read from environment variables — see .env.example.
+# dbt finds this file because DBT_PROFILES_DIR is set in .env.example to point here.
+
+confluent_demo:
+  target: dev
+  outputs:
+    dev:
+      type: confluent
+      organization_id: "{{ env_var('CONFLUENT_ORG_ID') }}"
+      environment_id: "{{ env_var('CONFLUENT_ENV_ID') }}"
+      cloud_provider: "{{ env_var('CONFLUENT_CLOUD_PROVIDER') }}"
+      cloud_region: "{{ env_var('CONFLUENT_CLOUD_REGION') }}"
+      flink_api_key: "{{ env_var('CONFLUENT_FLINK_API_KEY') }}"
+      flink_api_secret: "{{ env_var('CONFLUENT_FLINK_API_SECRET') }}"
+      compute_pool_id: "{{ env_var('CONFLUENT_COMPUTE_POOL_ID') }}"
+      dbname: "{{ env_var('CONFLUENT_DBNAME') }}"
+      threads: 1
